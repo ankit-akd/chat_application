@@ -11,6 +11,7 @@ import userRouter from './routes/userRouter.js';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import {app,server} from './socket/socket.js';
+import path from 'path';
 
 dotenv.config(); // this is used to run on server defined in .env
 
@@ -20,7 +21,9 @@ app.use(express.json()); //to get data from req.body in controllers
 app.use(cookieParser());
 app.use(cors());
 
-const PORT = process.env.PORT || 3002;
+const PORT = process.env.PORT || 3002; 
+
+const __dirname = path.resolve();
 
 app.get('/', (req,res) => {
     console.log('hello');
@@ -32,6 +35,12 @@ app.get('/', (req,res) => {
 app.use('/api/auth',authroutes);
 app.use('/api/message',messageRouter)
 app.use('/api/user',userRouter)
+
+app.use(express.static(path.join(__dirname, "/frontend/dist")))
+
+app.get("*",(req,res) => {
+    res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"))
+})
 
 const connectToMongoDB = async () => {
     try{
