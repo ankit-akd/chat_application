@@ -10,11 +10,12 @@ import userRouter from './routes/userRouter.js';
 
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import {app,server} from './socket/socket.js';
 
 dotenv.config(); // this is used to run on server defined in .env
 
 
-const app = express();
+
 app.use(express.json()); //to get data from req.body in controllers
 app.use(cookieParser());
 app.use(cors());
@@ -46,7 +47,7 @@ const connectToMongoDB = async () => {
 };
 
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
     connectToMongoDB();
 });
