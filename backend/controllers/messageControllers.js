@@ -68,3 +68,36 @@ export const getMessage = async (req,res) => {
         res.status(500).json({error:'internal server error'});
     }
 }
+
+export const sendGroupMessage = async (req,res) => {
+    try {
+        const {message} = req.body;
+        const newMessage = new Message({
+            message,
+            user: req.user.id,
+            group: req.params.groupId
+        });
+        await newMessage.save();
+        res.status(200).json({message: "message sent successfully"});
+
+    } catch (error) {
+        console.log('not able to send message',error.message);
+        res.status(400).json({message: "not able to send message"});
+    }
+}
+
+export const likeMessage = async (req,res) => {
+    try {
+        const message = await Message.findById(req.params.messageId);
+        if(!message){
+            console.log('message not found');
+            return res.status(404).json({message: "message not found"});
+        }
+        message.likes += 1;
+        await message.save();
+        res.status(200).json({message: 'liked successfully', likes: message.likes});
+    } catch (error) {
+        console.log('error while performing like',error.message);
+        res.status(400).json({message: "error while performing like"});
+    }
+}

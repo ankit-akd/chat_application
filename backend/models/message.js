@@ -4,17 +4,25 @@ const messageSchema = mongoose.Schema({
     senderId:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required: true
+        // required: true
     },
     receiverId:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required: true
+        // required: true
     },
     message:{
         type: String,
         required: true,
         trim: true,
+    },
+    group:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Group',
+    },
+    likes:{
+        type:Number,
+        default:0
     }
 },{timestamps:true}); //createdAt, updatedAt
 
