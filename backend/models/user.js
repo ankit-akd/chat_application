@@ -23,6 +23,10 @@ const userSchema = new mongoose.Schema({
     profilePic:{
         type:String,
         default:""
+    },
+    isAdmin:{
+        type:Boolean,
+        required: true
     }
 },{timestamps:true});
 

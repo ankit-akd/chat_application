@@ -7,6 +7,7 @@ import dotenv from 'dotenv';
 import authroutes from './routes/authrouter.js';
 import messageRouter from './routes/messageRouter.js';
 import userRouter from './routes/userRouter.js';
+import groupRouter from './routes/groupRouter.js'
 
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
@@ -35,11 +36,12 @@ app.get('/', (req,res) => {
 app.use('/api/auth',authroutes);
 app.use('/api/message',messageRouter)
 app.use('/api/user',userRouter)
+app.use('/api/group',groupRouter)
 
-app.use(express.static(path.join(__dirname, "/frontend/dist")))
+app.use(express.static(path.join(__dirname, "/frontend/build")))
 
 app.get("*",(req,res) => {
-    res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"))
+    res.sendFile(path.join(__dirname, "frontend", "build", "index.html"))
 })
 
 const connectToMongoDB = async () => {

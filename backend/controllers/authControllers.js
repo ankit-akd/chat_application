@@ -6,7 +6,7 @@ export const signup = async (req, res) => {
     // console.log('signup');
     // res.send('login page')
     try {
-        const { fullName, username, password, confirmPassword, gender } = req.body;
+        const { fullName, username, password, confirmPassword, gender, isAdmin } = req.body;
         if (password !== confirmPassword) {
             return res.status(400).json({ error: 'password & confirmPassword do not match' });
         }
@@ -27,6 +27,7 @@ export const signup = async (req, res) => {
             username,
             password: hashedPassword,
             gender,
+            isAdmin,
             profilePic: gender === 'male' ? boyProfile : girlProfile
         });
 
@@ -39,7 +40,8 @@ export const signup = async (req, res) => {
                 _id: newUser._id,
                 fullName: newUser.fullName,
                 username: newUser.username,
-                profilePic: newUser.profilePic
+                profilePic: newUser.profilePic,
+                isAdmin: newUser.isAdmin
             })
         }
         else {
