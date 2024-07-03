@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
-import { toast } from 'react-toastify';
+import toast from 'react-hot-toast';
 
 const useGroupChat = (groupId) => {
   const [messages, setMessages] = useState([]);
